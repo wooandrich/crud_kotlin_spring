@@ -32,19 +32,20 @@ dependencies {
 
     runtimeOnly("com.h2database:h2")
     //security
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    //implementation("org.springframework.boot:spring-boot-starter-security")
     //jwt
-    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
+    //implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    //runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+    //runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
     // swagger 설정
-    implementation("org.springdoc:springdoc-openapi-ui:1.6.15")
-    implementation("org.springdoc:springdoc-openapi-security:1.6.15")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
 }
 
 allOpen {
     annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
 }
 
 noArg {
