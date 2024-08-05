@@ -1,0 +1,23 @@
+spring:
+  h2:
+    console:
+      enabled: true # 콘솔을 enable 해야 H2 콘솔에 접근할 수 있다.
+  datasource:
+    driver-class-name: org.h2.Driver # H2 드라이버 지정
+    url: jdbc:h2:mem:crud;MODE=MySQL # Scheme 은 crud 로, 에뮬레이트 방식은 MySQL 로 지정
+    username: sa # 사용할 아이디
+    password:  # 사용할 패스워드
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect # 로그에 출력되는 쿼리 형식은 MySQL8 기준
+  jwt:
+    secret-key: ${SECRET_KEY}
+    access-token-expire-time: 3600
+    refresh-token-expire-time: 7200
