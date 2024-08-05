@@ -1,11 +1,41 @@
 package org.project.portfolio.domain.member.dto
 
-data class MemberDtoRequest (
+import com.fasterxml.jackson.annotation.JsonProperty
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Pattern
+
+data class MemberDtoRequest(
     val id: Long?,
+
+    @field:NotBlank
+    @JsonProperty("loginId")
     private val _loginId: String?,
+
+    @field:NotBlank
+    @JsonProperty("password")
+    @Pattern(
+        regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d{5,})(?=.*[!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{2,}).+\$",
+        message = "대소문자 포함, 숫자 5개 이상, 특수문자 포함 2개 이상 넣어야합니다."
+    )
     private val _password: String?,
+
+    @field:NotBlank
+    @JsonProperty("username")
     private val _username: String?,
+
+    @field:NotBlank
+    @JsonProperty("email")
+    @Email
     private val _email: String?,
+
+    @field:NotBlank
+    @JsonProperty("phoneNumber")
+    @Pattern(
+        regexp = "^01([0|1|6|7|8|9])-([0-9]{4})-([0-9]{4})\$",
+        message = "숫자와 하이폰으로 구성된 형식이어야 합니다."
+
+    )
     private val _phoneNumber: String?,
 ) {
     val loginId: String
