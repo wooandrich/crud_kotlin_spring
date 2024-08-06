@@ -2,6 +2,7 @@ package org.project.portfolio.domain.member.service
 
 import org.project.portfolio.domain.member.dto.LoginDto
 import org.project.portfolio.domain.member.dto.MemberDtoRequest
+import org.project.portfolio.domain.member.dto.MemberDtoResponse
 import org.project.portfolio.domain.member.entity.Member
 import org.project.portfolio.domain.member.entity.MemberRole
 import org.project.portfolio.domain.member.repository.MemberRepository
@@ -10,6 +11,7 @@ import org.project.portfolio.global.authority.JwtTokenProvider
 import org.project.portfolio.global.authority.TokenInfo
 import org.project.portfolio.global.exception.InvalidInputException
 import org.project.portfolio.global.status.ROLE
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -61,5 +63,13 @@ class MemberService(
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
 
         return jwtTokenProvider.createToken(authentication)
+    }
+
+    /**
+     * 내 정보 조회
+     */
+    fun searchMyInfo(id: Long): MemberDtoResponse {
+        val member: Member = memberRepository.findByIdOrNull(id) ?: throw InvalidInputException("id", "회원번호(${id})가 존재하지 않는 유저입니다.")
+        return member.toDto()
     }
 }

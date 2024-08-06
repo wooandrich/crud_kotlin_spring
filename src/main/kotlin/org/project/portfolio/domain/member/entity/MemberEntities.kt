@@ -1,6 +1,7 @@
 package org.project.portfolio.domain.member.entity
 
 import jakarta.persistence.*
+import org.project.portfolio.domain.member.dto.MemberDtoResponse
 import org.project.portfolio.global.common.domain.BaseEntity
 import org.project.portfolio.global.status.ROLE
 
@@ -32,7 +33,12 @@ class Member(
     ) : BaseEntity() {
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
         val memberRole: List<MemberRole>? = null
+
+    fun toDto(): MemberDtoResponse =
+        MemberDtoResponse(id!!, loginId, username, email, phoneNumber)
     }
+
+
 
 @Entity
 class MemberRole(

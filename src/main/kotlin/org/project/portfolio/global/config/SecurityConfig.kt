@@ -29,7 +29,8 @@ class SecurityConfig(
             .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) } // 세션 사용 X
             .authorizeHttpRequests {
-                it.requestMatchers("api/member/signup").anonymous()
+                it.requestMatchers("api/member/signup", "api/member/login").anonymous()
+                    .requestMatchers("api/member/**").hasRole("MEMBER")
                     .anyRequest().permitAll()
             }
             .addFilterBefore(

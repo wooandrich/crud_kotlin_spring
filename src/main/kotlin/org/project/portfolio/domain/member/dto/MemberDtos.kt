@@ -71,3 +71,11 @@ data class LoginDto(
     val password: String
         get() = _password!!
 }
+
+data class MemberDtoResponse(
+    val id: Long,
+    val loginId: String,
+    val username: String,
+    val email: String,
+    val phoneNumber: String,
+)
