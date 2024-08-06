@@ -1,8 +1,10 @@
 package org.project.portfolio.domain.member.controller
 
 import jakarta.validation.Valid
+import org.project.portfolio.domain.member.dto.LoginDto
 import org.project.portfolio.domain.member.dto.MemberDtoRequest
 import org.project.portfolio.domain.member.service.MemberService
+import org.project.portfolio.global.authority.TokenInfo
 import org.project.portfolio.global.dto.BaseResponse
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -21,5 +23,14 @@ class MemberController(
     fun signUp(@RequestBody @Valid memberDtoRequest: MemberDtoRequest): BaseResponse<Unit> {
         val resultMsg: String = memberService.signUp(memberDtoRequest)
         return BaseResponse(message = resultMsg)
+    }
+
+    /**
+     * 로그인
+     */
+    @PostMapping("/login")
+    fun login(@RequestBody @Valid loginDto: LoginDto): BaseResponse<TokenInfo> {
+        val tokenInfo = memberService.login(loginDto)
+        return BaseResponse(data = tokenInfo)
     }
 }

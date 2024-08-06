@@ -10,14 +10,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: false
         format_sql: true
         highlight-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect # 로그에 출력되는 쿼리 형식은 MySQL8 기준
-  jwt:
-    secret-key: ${SECRET_KEY}
-    access-token-expire-time: 3600
-    refresh-token-expire-time: 7200
+jwt:
+  secret-key: ${jwt.secret.key}

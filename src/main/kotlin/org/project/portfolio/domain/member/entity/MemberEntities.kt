@@ -2,6 +2,7 @@ package org.project.portfolio.domain.member.entity
 
 import jakarta.persistence.*
 import org.project.portfolio.global.common.domain.BaseEntity
+import org.project.portfolio.global.status.ROLE
 
 @Entity
 @Table(
@@ -10,6 +11,7 @@ import org.project.portfolio.global.common.domain.BaseEntity
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "member_id")
     var id: Long? = null,
 
     @Column(nullable = false, length = 30, updatable = false)
@@ -27,4 +29,22 @@ class Member(
     @Column(nullable = false, length = 100)
     val phoneNumber: String,
 
-    ) : BaseEntity()
+    ) : BaseEntity() {
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+        val memberRole: List<MemberRole>? = null
+    }
+
+@Entity
+class MemberRole(
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var id: Long? = null,
+
+    @Column(nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    val role: ROLE,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = ForeignKey(name = "fk_member_role_id"))
+    val member: Member,
+)
