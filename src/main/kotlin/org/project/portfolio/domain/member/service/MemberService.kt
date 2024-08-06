@@ -51,15 +51,8 @@ class MemberService(
     /**
      * 로그인 -> 토큰 발행
      */
-    fun login(longinDto: LoginDto): TokenInfo {
-        val member = memberRepository.findByLoginId(longinDto.loginId)
-            ?: throw InvalidInputException("loginId", "존재하지 않는 ID입니다.")
-
-        if (!encoder.matches(longinDto.password, member.password)) {
-            throw InvalidInputException("password", "비밀번호가 일치하지 않습니다.")
-        }
-
-        val authenticationToken = UsernamePasswordAuthenticationToken(longinDto.loginId, longinDto.password)
+    fun login(loginDto: LoginDto): TokenInfo {
+        val authenticationToken = UsernamePasswordAuthenticationToken(loginDto.loginId, loginDto.password)
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
 
         return jwtTokenProvider.createToken(authentication)
