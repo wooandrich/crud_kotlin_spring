@@ -50,6 +50,6 @@ data class MemberDtoRequest(
     val phoneNumber: String
         get() = _phoneNumber!!
 
-    fun toEntity(): Member =
+    fun toMember(): Member =
         Member(id, loginId, password, username, email, phoneNumber)
 }

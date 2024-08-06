@@ -21,7 +21,7 @@ class MemberService(
         if (member != null) {
             throw InvalidInputException("loginId", "이미 등록된 ID 입니다.")
         }
-        member = memberDtoRequest.toEntity()
+        member = memberDtoRequest.toMember()
 
         memberRepository.save(member)
 
