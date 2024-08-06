@@ -91,7 +91,7 @@ class JwtTokenProvider {
         Jwts.parserBuilder()
             .setSigningKey(key)
             .build()
-            .parseClaimsJwt(token)
+            .parseClaimsJws(token)
             .body
 
 }
