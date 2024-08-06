@@ -1,18 +1,15 @@
 package org.project.portfolio.domain.member.service
 
-import jakarta.validation.ConstraintViolationException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.project.portfolio.domain.member.dto.MemberDtoRequest
-import org.project.portfolio.domain.member.entity.Member
 import org.project.portfolio.domain.member.repository.MemberRepository
 import org.project.portfolio.global.exception.InvalidInputException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.bind.MethodArgumentNotValidException
 import kotlin.test.assertEquals
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -73,7 +70,7 @@ class MemberServiceTest {
             val assertion = assertThrows<InvalidInputException> {
                 memberService.signUp(memberDtoRequest2)
             }
-            Assertions.assertEquals("이미 등록된 ID 입니다.", assertion.message)
+            assertEquals("이미 등록된 ID 입니다.", assertion.message)
         }
     }
 
