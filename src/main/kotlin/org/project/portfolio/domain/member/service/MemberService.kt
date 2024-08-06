@@ -12,6 +12,7 @@ import org.project.portfolio.global.exception.InvalidInputException
 import org.project.portfolio.global.status.ROLE
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -22,6 +23,7 @@ class MemberService(
     private val memberRoleRepository: MemberRoleRepository,
     private val authenticationManagerBuilder: AuthenticationManagerBuilder,
     private val jwtTokenProvider: JwtTokenProvider,
+    private val encoder: PasswordEncoder,
 ) {
     /**
      * 회원가입
@@ -32,7 +34,9 @@ class MemberService(
         if (member != null) {
             throw InvalidInputException("loginId", "이미 등록된 ID 입니다.")
         }
-        member = memberDtoRequest.toMember()
+        // 비밀번호 암호화 및 Member 객체 생성
+        val encodedPassword = encoder.encode(memberDtoRequest.password)
+        member = memberDtoRequest.toMember(encodedPassword)
 
         memberRepository.save(member)
 
@@ -46,6 +50,13 @@ class MemberService(
      * 로그인 -> 토큰 발행
      */
     fun login(longinDto: LoginDto): TokenInfo {
+        val member = memberRepository.findByLoginId(longinDto.loginId)
+            ?: throw InvalidInputException("loginId", "존재하지 않는 ID입니다.")
+
+        if (!encoder.matches(longinDto.password, member.password)) {
+            throw InvalidInputException("password", "비밀번호가 일치하지 않습니다.")
+        }
+
         val authenticationToken = UsernamePasswordAuthenticationToken(longinDto.loginId, longinDto.password)
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
 

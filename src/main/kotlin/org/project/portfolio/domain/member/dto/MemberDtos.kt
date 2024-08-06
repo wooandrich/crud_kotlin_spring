@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 import org.project.portfolio.domain.member.entity.Member
+import org.springframework.security.crypto.password.PasswordEncoder
 
 data class MemberDtoRequest(
     val id: Long?,
@@ -38,6 +39,7 @@ data class MemberDtoRequest(
 
     )
     private val _phoneNumber: String?,
+
 ) {
     val loginId: String
         get() = _loginId!!
@@ -50,8 +52,9 @@ data class MemberDtoRequest(
     val phoneNumber: String
         get() = _phoneNumber!!
 
-    fun toMember(): Member =
-        Member(id, loginId, password, username, email, phoneNumber)
+    fun toMember(encodedPassword: String): Member =
+        Member(id, loginId, encodedPassword, username, email, phoneNumber)
+
 }
 
 data class LoginDto(

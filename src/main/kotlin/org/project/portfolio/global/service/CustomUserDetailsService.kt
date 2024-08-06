@@ -24,7 +24,7 @@ class CustomUserDetailsService(
     private fun createUserDetails(member: Member): UserDetails =
         User(
             member.loginId,
-            passwordEncoder.encode(member.password),
+            member.password,
             member.memberRole!!.map { SimpleGrantedAuthority("ROLE_${it.role}") }
         )
 }

@@ -1,5 +1,7 @@
-package org.project.portfolio.global.authority
+package org.project.portfolio.global.config
 
+import org.project.portfolio.global.authority.JwtAuthenticationFilter
+import org.project.portfolio.global.authority.JwtTokenProvider
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
