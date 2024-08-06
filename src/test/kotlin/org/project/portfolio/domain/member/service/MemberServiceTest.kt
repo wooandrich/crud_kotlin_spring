@@ -139,7 +139,11 @@ class MemberServiceTest {
             val searchMember: MemberDtoResponse = memberService.searchMyInfo(member?.id!!)
 
             // then
+            assertEquals(member.id, searchMember.id)
             assertEquals(member.loginId, searchMember.loginId)
+            assertEquals(member.username, searchMember.username)
+            assertEquals(member.email, searchMember.email)
+            assertEquals(member.phoneNumber, searchMember.phoneNumber)
         }
 
     }
