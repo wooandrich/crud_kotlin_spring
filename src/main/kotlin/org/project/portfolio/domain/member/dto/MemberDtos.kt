@@ -8,7 +8,7 @@ import org.project.portfolio.domain.member.entity.Member
 import org.springframework.security.crypto.password.PasswordEncoder
 
 data class MemberDtoRequest(
-    val id: Long?,
+    var id: Long?,
 
     @field:NotBlank
     @JsonProperty("loginId")
